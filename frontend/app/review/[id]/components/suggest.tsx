@@ -1,53 +1,35 @@
+/**
+ * @fileoverview Suggest component that allows users to propose and submit changes to fields
+ * @author EasyReview
+ * @license MIT
+ */
+
 "use client";
 
-import { useState } from "react";
-import { Field } from "../../../types";
-import { updateField } from "../../../utils/updaters";
-import moment from 'moment'
-import { usePathname, useRouter } from "next/navigation";
-import cardStyle from "../../../utils/styles";
+import useReviewStore from "@/app/stores/reviewstore";
+/**
+ * Suggest component that provides an interface for suggesting changes to field values
+ */
+export default function Suggest() {
+  const setSuggestionField = useReviewStore(
+    (state) => state.setSuggestionField
+  );
 
-
-export default function Suggest(
-    {
-        field
-    }: {
-        field: Field | null
-    }) {
-
-    if (field === null) return null
-
-    // States
-    const [changes, setChanges] = useState<string>("")
-
-    // Router
-    const router = useRouter()
-    const path = usePathname()
-
-    // Event handlers
-    const handleSubmit = () => {
-        const currentTime = new Date()
-        const payload = {
-            value: changes,
-            history: { ...field.history, [moment(currentTime).format("LLL")]: changes }
-        }
-
-        updateField(payload, field.id)
-        router.refresh()
-    }
-
-    return (
-        <div className={cardStyle + "flex flex-col overflow-auto break-words bg-white rounded-xl stat"}>
-            <div className="text-lg stat-value">Suggest</div>
-            <p className="mb-5 text-xs text-gray-400">Within this field you are able suggest changes to a field. Changes made will be documented and are revertible.</p>
-            <div className="flex flex-col gap-4">
-                <textarea
-                    className="textarea textarea-bordered"
-                    placeholder={field.value}
-                    onChange={(e) => setChanges(e.target.value)}
-                />
-                <button className=" btn btn-xs" onClick={handleSubmit}>Submit</button>
-            </div>
-        </div>
-    )
+  return (
+    <div className="flex flex-col justify-center ml-96 pb-4 pt-1 w-full max-w-xs shadow-md shadow-black/30 z-10 rounded-md bg-base-200 border-[1px] border-primary/40 relative">
+      <button
+        className="absolute top-1 right-2 text-neutral-content hover:text-neutral-content/40"
+        onClick={() => {
+          setSuggestionField("");
+        }}
+      >
+        ✕
+      </button>
+      <input
+        type="text"
+        placeholder="Suggest a change ..."
+        className="input input-xs text-xs bg-transparent focus:outline-none"
+      />
+    </div>
+  );
 }

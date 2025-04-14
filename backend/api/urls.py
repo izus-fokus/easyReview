@@ -20,6 +20,7 @@ urlpatterns = [
     path("reviews/fetch/", views.fetchDatasetFromDOI),
     path("reviews/<str:id>/stats/", views.getFieldCount),
     path("reviews/<str:id>/files/", views.getFilesByReviewId),
+    path("reviews/<str:id>/open/", views.getOpenFieldsByReviewId),
     path("reviews/doi/<str:doi>", views.getReviewsByDatasetDOI),
     path("reviews/reviewer/<str:id>", views.getReviewByReviewer),
     #
@@ -32,4 +33,8 @@ urlpatterns = [
     #
     # Fields
     path("fields/<str:pk>", views.FieldDetails.as_view()),
+    #
+    # Messages
+    path("messages/", views.MessageCreate.as_view()),
+    path("messages/<str:pk>", views.MessageDetails.as_view()),
 ]

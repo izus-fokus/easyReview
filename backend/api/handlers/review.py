@@ -7,18 +7,48 @@ from .serializers import ReviewSerializer
 
 
 def review_by_doi(request, doi):
+    """
+    Retrieve reviews associated with a specific DOI.
+
+    Args:
+        request: The HTTP request object.
+        doi (str): The Digital Object Identifier to filter reviews by.
+
+    Returns:
+        Response: A DRF response containing a list of serialized reviews matching the DOI.
+    """
     reviews = Review.objects.filter(doi=doi)
     serializer = ReviewSerializer(reviews, many=True)
     return Response(serializer.data)
 
 
 def review_by_reviewer(request, reviewerid):
+    """
+    Retrieve reviews associated with a specific reviewer.
+
+    Args:
+        request: The HTTP request object.
+        reviewerid (int): The ID of the reviewer to filter reviews by.
+
+    Returns:
+        Response: A DRF response containing a list of serialized reviews by the reviewer.
+    """
     reviews = Review.objects.filter(reviewer=reviewerid)
     serializer = ReviewSerializer(reviews, many=True)
     return Response(serializer.data)
 
 
 def get_field_count(request, review_id):
+    """
+    Calculate the total and accepted field count for a specific review.
+
+    Args:
+        request: The HTTP request object.
+        review_id (int): The primary key of the review to analyze.
+
+    Returns:
+        Response: A DRF response containing the total field count and number of accepted fields.
+    """
     # Get total field count
     primitive_fields = list(
         Review.objects.filter(pk=review_id).values_list(

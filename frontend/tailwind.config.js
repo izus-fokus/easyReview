@@ -16,7 +16,7 @@ module.exports = {
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui"), require('tailwindcss-bg-patterns')],
   daisyui: {
-    themes: ["light", "dark", "cupcake", "night", "corporate"],
+    themes: ["light", "dark", "cupcake", "night", "corporate", "cmyk", "nord", "forest", "dracula"],
   },
   patterns: {
     opacities: {
