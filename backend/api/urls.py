@@ -33,4 +33,8 @@ urlpatterns = [
     #
     # Fields
     path("fields/<str:pk>", views.FieldDetails.as_view()),
+    #
+    # Messages
+    path("messages/", views.MessageCreate.as_view()),
+    path("messages/<str:pk>", views.MessageDetails.as_view()),
 ]

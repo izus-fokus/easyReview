@@ -1,6 +1,6 @@
 name: easyreview-app
 
-# Docker Compose configuration for local development environment
+# Docker Compose configuration for EasyReview production deployment
 # Defines services for frontend, backend, database, cache, and task queue
 
 services:
@@ -17,8 +17,6 @@ services:
       - easyreview-backend
       - redis
       - postgres
-    volumes:
-      - ${PWD}/frontend:/app
 
   # Backend service using Django application
   easyreview-backend:
@@ -32,15 +30,15 @@ services:
              python manage.py ensure_adminuser --no-input &&
              python manage.py runserver 0.0.0.0:8000"
     env_file: .env
-    volumes:
-      - ${PWD}/backend:/app
     ports:
       - 8000:8000
+    volumes:
+      - ${PWD}/backend/reviews/migrations:/app/reviews/migrations
     depends_on:
       - postgres
       - redis
 
-  # PostgreSQL database service for persistent data storage
+  # PostgreSQL database service
   postgres:
     container_name: postgres
     image: postgres:12
@@ -51,7 +49,7 @@ services:
     volumes:
       - ${PWD}/_data/postgres:/var/lib/postgresql/data
 
-  # Redis service for caching and message broker functionality
+  # Redis cache and message broker service
   redis:
     image: redis:6
     container_name: redis
@@ -63,7 +61,7 @@ services:
     volumes:
       - ${PWD}/_data/redis:/var/lib/redis
 
-  # Celery worker service for asynchronous task processing
+  # Celery worker service for background task processing
   celery:
     build: ./backend
     image: easyreview-celery:latest
@@ -81,6 +79,5 @@ services:
       - postgres
       - redis
 
-# Default network configuration
 networks:
   default:

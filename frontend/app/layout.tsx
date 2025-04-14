@@ -12,16 +12,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" data-theme="light">
+    <html lang="en" data-theme="dracula">
       <body
-        className="z-0 min-h-screen pattern-wavy pattern-slate-200 pattern-bg-white pattern-size-32 pattern-opacity-100"
+        // className="z-0 h-screen bg-gradient-to-r from-base-300 via-base-200 to-base-300"
+        className="bg-[url('../public/pattern.svg')]"
       >
-        <div className="z-50 md:mx-40">
-          <Header />
-          <main>
-            {children}
-          </main>
-        </div>
+        <main>
+          {children}
+        </main>
       </body>
     </html >
   )
