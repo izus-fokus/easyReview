@@ -13,7 +13,7 @@
     "@types/node": "20.2.5",
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
-    "axios": "^1.4.0",
+    "axios": "^1.12.1",
     "axios-hooks": "^4.0.0",
     "crypto-js": "^4.1.1",
     "eslint": "8.41.0",
